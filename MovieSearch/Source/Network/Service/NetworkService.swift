@@ -1,43 +1,23 @@
 import UIKit
+import PulseCore
 
-struct NetworkService {
+class NetworkService: NSObject {
   private let baseURLString = "https://api.themoviedb.org"
   private let imageBaseURLString = "https://image.tmdb.org"
 
   let urlSession = URLSession(configuration: URLSessionConfiguration.default)
+  private let logger = NetworkLogger()
+  var searchCompletion: ((Result<[Movie], NetworkError>) -> Void)?
 
   @discardableResult
-  func search(for searchTerm: String, completion: @escaping (Result<[Movie], NetworkError>) -> Void) -> URLSessionDataTask? {
+  func search(for searchTerm: String) -> URLSessionDataTask? {
     guard let url = try? url(for: searchTerm) else {
-      completion(.failure(NetworkError.invalidURL))
+      searchCompletion?(.failure(NetworkError.invalidURL))
       return nil
     }
 
-    let task = urlSession.dataTask(with: url) { data, response, error in
-      if error != nil {
-        completion(.failure(NetworkError.invalidResponseType))
-        return
-      }
-
-      guard let response = response as? HTTPURLResponse,
-        response.statusCode == 200,
-          let data = data else {
-            completion(.failure(NetworkError.invalidResponseType))
-              return
-            }
-
-      do {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-
-        let movieResponse = try decoder.decode(MovieResponse.self, from: data)
-        completion(.success(movieResponse.list))
-      } catch {
-        print(error)
-        completion(.failure(NetworkError.invalidParse))
-      }
-    }
-
+    let task = urlSession.dataTask(with: url)
+    task.delegate = self
     task.resume()
 
     return task
@@ -116,5 +96,54 @@ struct NetworkService {
     }
 
     return url
+  }
+}
+
+extension NetworkService: URLSessionTaskDelegate, URLSessionDataDelegate {
+  func urlSession(
+    _ session: URLSession,
+    dataTask: URLSessionDataTask,
+    didReceive response: URLResponse,
+    completionHandler: @escaping (URLSession.ResponseDisposition) -> Void
+  ) {
+    logger.logDataTask(dataTask, didReceive: response)
+    if let response = response as? HTTPURLResponse,
+       response.statusCode != 200 {
+      searchCompletion?(.failure(.invalidResponseType))
+    }
+    completionHandler(.allow)
+  }
+  
+  func urlSession(
+    _ session: URLSession,
+    task: URLSessionTask,
+    didCompleteWithError error: Error?
+  ) {
+      logger.logTask(task, didCompleteWithError: error)
+  }
+  
+  func urlSession(
+    _ session: URLSession,
+    task: URLSessionTask,
+    didFinishCollecting metrics: URLSessionTaskMetrics
+  ) {
+    logger.logTask(task, didFinishCollecting: metrics)
+  }
+  
+  func urlSession(
+    _ session: URLSession,
+    dataTask: URLSessionDataTask,
+    didReceive data: Data
+  ) {
+    logger.logDataTask(dataTask, didReceive: data)
+    do {
+      let decoder = JSONDecoder()
+      decoder.keyDecodingStrategy = .convertFromSnakeCase
+      
+      let movieResponse = try decoder.decode(MovieResponse.self, from: data)
+      searchCompletion?(.success(movieResponse.list))
+    } catch {
+      searchCompletion?(.failure(NetworkError.invalidParse))
+    }
   }
 }

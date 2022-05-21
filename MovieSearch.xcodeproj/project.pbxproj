@@ -15,6 +15,7 @@
 		5A56C9A428379A2B00AE9EF8 /* Pulse in Frameworks */ = {isa = PBXBuildFile; productRef = 5A56C9A328379A2B00AE9EF8 /* Pulse */; };
 		5A56C9A628379A2B00AE9EF8 /* PulseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5A56C9A528379A2B00AE9EF8 /* PulseCore */; };
 		5A56C9A828379A2B00AE9EF8 /* PulseUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5A56C9A728379A2B00AE9EF8 /* PulseUI */; };
+		5A56C9AA2838963600AE9EF8 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A56C9A92838963600AE9EF8 /* ImageDownloader.swift */; };
 		9905684E275095D700EFFCFE /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9905684D275095D700EFFCFE /* Movie.swift */; };
 		99541D352765A5D0008982E6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99541D342765A5D0008982E6 /* APIKey.swift */; };
 		9961E8562751D3E300C2C79F /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E8552751D3E300C2C79F /* MovieList.swift */; };
@@ -35,6 +36,7 @@
 		18D775C922AD944400AE281E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		18D775CE22AD944400AE281E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18D775DE22AD96B400AE281E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5A56C9A92838963600AE9EF8 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		9905684D275095D700EFFCFE /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		99541D342765A5D0008982E6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		9961E8552751D3E300C2C79F /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				9961E8682753BDD400C2C79F /* NetworkService.swift */,
+				5A56C9A92838963600AE9EF8 /* ImageDownloader.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 			files = (
 				18D775C522AD944300AE281E /* ContentView.swift in Sources */,
 				99E21BCD275DB282006C1250 /* MovieRowView.swift in Sources */,
+				5A56C9AA2838963600AE9EF8 /* ImageDownloader.swift in Sources */,
 				9961E85E275270E900C2C79F /* NetworkError.swift in Sources */,
 				9961E8692753BDD400C2C79F /* NetworkService.swift in Sources */,
 				1839F4B025190F2A00BB00F1 /* AppMain.swift in Sources */,

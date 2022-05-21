@@ -33,61 +33,62 @@
 import SwiftUI
 
 struct MovieDetailView: View {
-  let movie: Movie
+    let movie: Movie
 
-  @ObservedObject
-  var viewModel = MovieDetailViewModel()
+    @ObservedObject
+    var viewModel = MovieDetailViewModel()
 
-  init(movie: Movie) {
-    self.movie = movie
-    viewModel.fetchImage(for: movie, imageType: .detail)
-  }
-
-  var body: some View {
-    ScrollView {
-      VStack {
-        if let releaseDate = movie.displayReleaseDate() {
-          Text("Released: \(releaseDate)")
-            .font(.system(size: 20, weight: .bold, design: .rounded))
-            .padding([.bottom])
-        }
-        Text("\(movie.displayRating())")
-          .font(.system(size: 20, weight: .bold, design: .rounded))
-          .padding([.bottom])
-        HStack(alignment: .top) {
-          if let downloadedImage = viewModel.posterImage {
-            Image(uiImage: downloadedImage)
-              .resizable()
-              .cornerRadius(5)
-              .frame(width: 150, height: 250, alignment: .center)
-              .cornerRadius(5)
-              .padding()
-          } else {
-            Image(systemName: "film")
-              .resizable()
-              .cornerRadius(5)
-              .frame(width: 150, height: 250, alignment: .center)
-              .padding()
-          }
-          Text(movie.overview)
-        }
-      }
+    init(movie: Movie) {
+        self.movie = movie
+        viewModel.fetchImage(for: movie, imageType: .detail)
     }
-    .padding()
-    .navigationTitle(movie.title)
-  }
+
+    var body: some View {
+        ScrollView {
+            VStack {
+                if let releaseDate = movie.displayReleaseDate() {
+                    Text("Released: \(releaseDate)")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .padding([.bottom])
+                }
+                Text("\(movie.displayRating())")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .padding([.bottom])
+                HStack(alignment: .top) {
+                    if let downloadedImage = viewModel.posterImage {
+                        Image(uiImage: downloadedImage)
+                            .resizable()
+                            .cornerRadius(5)
+                            .frame(width: 150, height: 250, alignment: .center)
+                            .cornerRadius(5)
+                            .padding()
+                    } else {
+                        Image(systemName: "film")
+                            .resizable()
+                            .cornerRadius(5)
+                            .frame(width: 150, height: 250, alignment: .center)
+                            .padding()
+                    }
+                    Text(movie.overview)
+                }
+            }
+        }
+        .padding()
+        .navigationTitle(movie.title)
+    }
 }
 
 // swiftlint:disable line_length
 struct MovieDetailView_Previews: PreviewProvider {
-  static var previews: some View {
-    MovieDetailView(movie: Movie(
-      id: 0,
-      title: "The Matrix",
-      overview: "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
-      voteAverage: 5.0,
-      posterPath: nil,
-      releaseDate: "1999-03-30")
-    )
-  }
+    static var previews: some View {
+        MovieDetailView(movie: Movie(
+            id: 0,
+            title: "The Matrix",
+            overview: "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+            voteAverage: 5.0,
+            posterPath: nil,
+            releaseDate: "1999-03-30"
+        )
+        )
+    }
 }

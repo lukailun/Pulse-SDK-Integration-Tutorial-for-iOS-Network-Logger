@@ -1,35 +1,35 @@
+import Logging
+import Pulse
 import SwiftUI
 import UIKit
-import Pulse
-import Logging
 
 @main
 struct AppMain: App {
-  init() {
-    setupNavbarAppearance()
-    LoggingSystem.bootstrap(PersistentLogHandler.init)
-  }
-
-  var body: some Scene {
-    WindowGroup {
-      ContentView()
+    init() {
+        setupNavbarAppearance()
+        LoggingSystem.bootstrap(PersistentLogHandler.init)
     }
-  }
 
-  private func setupNavbarAppearance() {
-    let appearance = UINavigationBarAppearance()
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
 
-    appearance.configureWithOpaqueBackground()
-    appearance.backgroundColor = UIColor(named: "movie-green")
-    appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-    appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    private func setupNavbarAppearance() {
+        let appearance = UINavigationBarAppearance()
 
-    UINavigationBar.appearance().standardAppearance = appearance
-    UINavigationBar.appearance().scrollEdgeAppearance = appearance
-    UINavigationBar.appearance().compactAppearance = appearance
-    UINavigationBar.appearance().tintColor = UIColor.white
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor(named: "movie-green")
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
 
-    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
-    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .black
-  }
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().tintColor = UIColor.white
+
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = .white
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .black
+    }
 }

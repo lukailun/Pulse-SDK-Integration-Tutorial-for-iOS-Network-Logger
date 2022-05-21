@@ -33,67 +33,68 @@
 import SwiftUI
 
 struct MovieRowView: View {
-  let defaultImage = UIImage(systemName: "film")
+    let defaultImage = UIImage(systemName: "film")
 
-  let movie: Movie
+    let movie: Movie
 
-  @ObservedObject
-  var viewModel = MovieDetailViewModel()
+    @ObservedObject
+    var viewModel = MovieDetailViewModel()
 
-  init(movie: Movie) {
-    self.movie = movie
-    viewModel.fetchImage(for: movie, imageType: .detail)
-  }
-
-  var body: some View {
-    Group {
-      HStack(alignment: .center) {
-        if let downloadedImage = viewModel.posterImage {
-          Image(uiImage: downloadedImage)
-            .resizable()
-            .frame(width: 100, height: 160, alignment: .center)
-            .cornerRadius(5)
-            .padding()
-        } else {
-          Image(systemName: "film")
-            .resizable()
-            .frame(width: 100, height: 160, alignment: .center)
-            .foregroundColor(.white)
-            .padding()
-        }
-
-        VStack(alignment: .leading) {
-          Group {
-            Text(movie.title)
-              .fontWeight(.black)
-              .font(.system(.headline))
-            Text(movie.displayReleaseDate() ?? "")
-              .fontWeight(.light)
-              .foregroundColor(.gray)
-            Text(movie.overview)
-              .lineLimit(3)
-          }
-          .padding(.bottom, 10)
-        }
-        .padding(.horizontal, 20)
-      }
+    init(movie: Movie) {
+        self.movie = movie
+        viewModel.fetchImage(for: movie, imageType: .detail)
     }
-    .frame(maxWidth: .infinity, alignment: .center)
-    .cornerRadius(25)
-    .padding(.all, 5)
-  }
+
+    var body: some View {
+        Group {
+            HStack(alignment: .center) {
+                if let downloadedImage = viewModel.posterImage {
+                    Image(uiImage: downloadedImage)
+                        .resizable()
+                        .frame(width: 100, height: 160, alignment: .center)
+                        .cornerRadius(5)
+                        .padding()
+                } else {
+                    Image(systemName: "film")
+                        .resizable()
+                        .frame(width: 100, height: 160, alignment: .center)
+                        .foregroundColor(.white)
+                        .padding()
+                }
+
+                VStack(alignment: .leading) {
+                    Group {
+                        Text(movie.title)
+                            .fontWeight(.black)
+                            .font(.system(.headline))
+                        Text(movie.displayReleaseDate() ?? "")
+                            .fontWeight(.light)
+                            .foregroundColor(.gray)
+                        Text(movie.overview)
+                            .lineLimit(3)
+                    }
+                    .padding(.bottom, 10)
+                }
+                .padding(.horizontal, 20)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .cornerRadius(25)
+        .padding(.all, 5)
+    }
 }
 
 // swiftlint:disable line_length
 struct MovieRow_Previews: PreviewProvider {
-  static var previews: some View {
-    MovieRowView(
-      movie: Movie(
-        id: 0,
-        title: "The Matrix",
-        overview: "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
-        voteAverage: 5.0,
-        posterPath: nil,
-        releaseDate: "1999-03-30"))
-  }
+    static var previews: some View {
+        MovieRowView(
+            movie: Movie(
+                id: 0,
+                title: "The Matrix",
+                overview: "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+                voteAverage: 5.0,
+                posterPath: nil,
+                releaseDate: "1999-03-30"
+            ))
+    }
 }
